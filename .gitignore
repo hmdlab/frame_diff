@@ -1,0 +1,6 @@
+*.o
+*.gch
+bin/frame_diff
+out/*
+!out/.gitkeep
+bin/image_test
