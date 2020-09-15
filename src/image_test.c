@@ -1,5 +1,5 @@
 /* -------------------------------------------------------------------------------------
- * 
+ *
  *	image_test.c:   電生実験　「フレーム間差分オブジェクト抽出」
  *					サンプルプログラム（１）
  * -------------------------------------------------------------------------------------
@@ -51,18 +51,18 @@ int main(int argc,char *argv[])
 unsigned char
 	*input_image[3],		/* 入力画像データ（RGBカラー、256諧調） */
 	*output_image[3];		/* 出力画像データ（RGBカラー、256諧調） */
-	
+
 FILE
 	*fpin,					/* 入力画像データの読み込み先のファイルポインタ */
 	*fpout,					/* 出力画像データの出力先のファイルポインタ */
 	*fphist;				/* ヒストグラムデータの出力先のファイルポインタ */
-		
+
 char
 	fn_in[100],				/* 入力画像ファイルのファイル名 */
 	fn_out[100],			/* 出力画像ファイルのファイル名 */
 	fn_hist[100],			/* ヒストグラムデータ・ファイルのファイル名 */
 	*string;				/* 引数（文字列）読み取り用バッファ */
-		
+
 int
 	h_size,					/* 画像データのサイズ（ヨコ） */
 	v_size,					/* 画像データのサイズ（タテ） */
@@ -77,9 +77,9 @@ int
 	reflect_img,			/* 左右反転処理に関するフラグ（0:非実行, 1:実行）*/
 	negative_img,			/* 輝度反転処理に関するフラグ（0:非実行, 1:実行）*/
 	histograms[3][NUM_OF_BINS]; /* ヒストグラムデータ */
-	
-	
-	
+
+
+
 	/*
 	 *  初期化処理
 	 */
@@ -121,7 +121,7 @@ int
 		exit(0);
 		}
 	}
-    
+
 	/* 入力画像ファイルのオープン */
 	if(fpin_check==0){
 		fprintf(stderr," set input file name with -in \n");
@@ -131,9 +131,9 @@ int
 			fprintf(stderr," Can't open input file:%s\n", fn_in);
 			exit(1);
 		}
-		fprintf(stdout," input file: %s\n",fn_in);  
+		fprintf(stdout," input file: %s\n",fn_in);
 	}
-		
+
 	/* 出力画像ファイルのオープン */
 	if(reflect_img||negative_img) {
 		if(fpout_check==0){
@@ -159,28 +159,28 @@ int
 		}
 		fprintf(stdout," histogram data file: %s\n",fn_hist);
 	}
-		
-		
-	/* 画像サイズ（タテ・ヨコ）の取得 */		
+
+
+	/* 画像サイズ（タテ・ヨコ）の取得 */
 	ret=get_bmp_image_size(
 		&h_size,			/* out:画像サイズ（ヨコ） */
 		&v_size,			/* out:画像サイズ（タテ） */
 		fpin);				/* in:画像ファイルのポインタ */
 	fprintf(stdout," width x length : %d x %d\n",h_size,v_size);
-		
+
 	/* メモリ領域の確保 */
 	for(c=0;c<3;c++) input_image[c]=(unsigned char *) malloc(h_size*v_size*sizeof(unsigned char));
 	for(c=0;c<3;c++) output_image[c]=(unsigned char *) malloc(h_size*v_size*sizeof(unsigned char));
-	
+
 	/* ヒストグラムデータ（各色・ビンの頻度）の初期化 */
 	for (bin=0;bin<NUM_OF_BINS;bin++) {
 		for (c=0;c<3;c++ ) {
 			histograms[c][bin]=0;
 		}
 	}
-		
-		
-		
+
+
+
 	/*
 	 *  画像データの読み込み
 	 */
@@ -189,16 +189,16 @@ int
 		h_size,					/* in:画像サイズ（ヨコ） */
 		v_size,					/* in:画像サイズ（タテ） */
 		fpin);					/* in:画像ファイルのポインタ */
-		
-		
-		
+
+
+
 	/*
 	 *  画像の操作（左右反転 or 輝度反転） と ヒストグラムデータの取得
 	 */
 	for(c=0;c<3;c++){
 		for(j=0;j<v_size;j++){
 			for(i=0;i<h_size;i++){
-				
+
 				if (reflect_img) {
 				/* 左右反転操作（'-reflect'オプション指定時） */
 					output_image[c][j*h_size+i]=input_image[c][j*h_size+(h_size-i-1)];
@@ -218,8 +218,8 @@ int
 			}
 		}
 	}
-	
-		
+
+
 	/*
 	 *   処理結果（画像、ヒストグラムデータ）の出力
 	 */
@@ -253,7 +253,7 @@ int
 	fclose(fpin);
 	if(reflect_img||negative_img) fclose(fpout);
 	fclose(fphist);
-		
+
 	/* メモリ領域の解放 */
 	for(c=0;c<3;c++) free((unsigned char *) input_image[c]);
 	if(reflect_img||negative_img) {
@@ -263,7 +263,7 @@ int
 
 	/* 処理終了の通知 */
 	fprintf(stdout,"program terminated normally\n");
-		
+
 	return 0;
 }
 
@@ -274,13 +274,13 @@ int
  *	サブ関数
  *
  * ------------------------------- */
- 
+
 /* 引数に関するメッセージの表示 */
 void usage(char *s)
 {
   fprintf(stdout,
     " image_test -in (input file name) -out (output file name)\n");
-	
+
   exit(1);
 }
 

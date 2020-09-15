@@ -3,7 +3,7 @@
 /* ---------------------------- */
 extern void
 MedianSmoothing (
-	unsigned char *img_arr[], 
+	unsigned char *img_arr[],
 	int h_size,
 	int v_size,
 	int num_layers

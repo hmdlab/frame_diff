@@ -1,5 +1,5 @@
 /* -------------------------------------------------------------------------------------
- * 
+ *
  *	frame_diff_template_basic.c:
  *					電生実験　「フレーム間差分オブジェクト抽出」
  *					実験１・実験２用プログラムコード（ひな形、初心者向け）
@@ -47,7 +47,7 @@
  *	関数の宣言部
  *
  * ------------------------------- */
- 
+
 /* 引数に関するメッセージの表示 */
 void usage();
 
@@ -64,8 +64,8 @@ void initialise(
 	FILE **fp_bmp_alpha_2,
 	FILE **fp_bmp_actual,
 	FILE **fp_bmp_ideal,
-	int *h_size, 
-	int *v_size, 
+	int *h_size,
+	int *v_size,
 	float *theta,
 	int *evaluation,
 	int *composite
@@ -128,7 +128,7 @@ FILE
 	*fp_bmp_alpha_2,			/* オブジェクト領域候補画像ファイル２（BMP形式） */
 	*fp_bmp_actual,				/* オブジェクト領域抽出結果の出力先（BMP形式）*/
 	*fp_bmp_ideal;				/* 正解オブジェクト領域画像（BMP形式） */
-		
+
 int
 	h_size,						/* 入出力画像のサイズ（ヨコ） */
 	v_size,						/* 入出力画像のサイズ（タテ） */
@@ -147,9 +147,9 @@ int
 float
 	theta,						/* ２値化の閾値（0～255） */
 	err;						/* 注目画素でのオブジェクト領域のエラー */
-	
-	
-	/* 
+
+
+	/*
 	 *  （０）　初期化処理：入出力ファイルのポインタ、画像サイズ、閾値などの設定
 	 */
 	initialise(
@@ -169,7 +169,7 @@ float
 		&theta,					/* out： ２値化処理の閾値 */
 		&evaluation,			/* out： 誤差の評価に関するフラグ（０：非実行、１：実行） */
 		&composite);			/* out： 画像の合成に関するフラグ（０：非実行、１：実行） */
-	
+
 	/* ヒストグラムデータ格納配列の初期化 */
 	for (bin=0;bin<NUM_OF_BINS;bin++) {
 		histograms[0][bin] = 0;
@@ -219,7 +219,7 @@ float
 		h_size,					/* in：画像サイズ（ヨコ） */
 		v_size,					/* in：画像サイズ（タテ） */
 		fp_bmp_in_2	);			/* in：画像ファイルのポインタ */
-	
+
 	ret=image_input_bmp(
 		input_bmp_image[2],		/* out：入力画像3(t=2) */
 		h_size,					/* in：画像サイズ（ヨコ） */
@@ -234,7 +234,7 @@ float
 			v_size,				/* in：画像サイズ（タテ） */
 			fp_bmp_base);		/* in：画像ファイルのポインタ */
 	}
-	
+
 	/* (1'') 正解オブジェクト領域画像の読み込み（オプション） */
 	if (evaluation) {
 		ret=image_input_bmp(
@@ -261,7 +261,7 @@ float
 		}
 	}
 
-		
+
 	/* ====================================================================
 	 *
 	 *  【実験１】 フレーム間差分法
@@ -277,7 +277,7 @@ float
 	 *			unsigned char diff  輝度差分の絶対値
 	 *			int bin;			ヒストグラムのビンの番号
 	 *			float theta;		２値化処理の閾値
-	 *			
+	 *
 	 *		入力データの参照先：
 	 *			unsigned char input_grey_image[t][pos]; 入力画像の輝度値（256諧調）
 	 *
@@ -296,7 +296,7 @@ float
 	 *						  int h_size, int v_size);	２値化処理
 	 *
 	 * -------------------------------------------------------------------- */
-	 
+
 	/* (3) 輝度フレーム間差分の計算とヒストグラムデータの作成	・・・　【各自で必要なプログラムコードを作成】 */
 	for(j=0; j<v_size; j++) {
 		for(i=0; i<h_size; i++) {
@@ -318,9 +318,9 @@ float
 			/* ここまでに記述 */
 		} /* for (i) */
 	} /* for (j) */
-	
-	
-	
+
+
+
 	/* (4) オブジェクト領域候補の計算（２値化）   ・・・　【各自で必要なプログラムコードを作成】 */
 	/* --------------------------------------------------------------------
 	 *							【 ここに追加すべき処理の内容 】
@@ -337,7 +337,7 @@ float
 	for(j=0; j<v_size; j++) {
 		for(i=0; i<h_size; i++) {
 			pos=j*h_size+i;		/* pos: 画像平面上の点(i,j)に対応する配列のインデックス */
-			
+
 			/* ----------------------------------------------------------------------
 			 *							【 ここに追加すべき処理の内容 】
 			 * ----------------------------------------------------------------------
@@ -357,8 +357,8 @@ float
 	} /* for (j) */
 
 
-	
-	
+
+
 	/*
 	 *  (6) 正解オブジェクト領域に対する誤差の評価（オプション）
 	 */
@@ -371,8 +371,8 @@ float
 		fprintf(stderr,"theta=%2.0f , error=%4.3f\n", theta, err);
 		fprintf(stdout,"%2.0f	%4.3f\n", theta, err);
 	}
-	
-	
+
+
 	/* ====================================================================
 	 *
 	 *  【実験２】 画像の合成
@@ -383,7 +383,7 @@ float
 	 *			int v_size;		入力画像のサイズ（タテ）
 	 *			int pos;		１次元配列の番号(= 0, ... , h_size*v_size-1)
 	 *			int c;			色成分の番号（c=0:R, c=1:G, c=2:B）
-	 *			
+	 *
 	 *		入力データの参照先：
 	 *			unsigned char input_bmp_image[1][c][pos];   時刻t=1の入力画像（256諧調、カラー）
 	 *			unsigned char base_bmp_image[c][pos];   合成用背景画像（256諧調、カラー）
@@ -393,13 +393,13 @@ float
 	 *			unsigned char base_bmp_image[c][pos];   合成結果の画像（上書き）（256諧調、カラー）
 	 *
 	 * -------------------------------------------------------------------- */
-	 
+
 	/* (7) 合成画像の作成   ・・・　【各自で必要なプログラムコードを作成】 */
 	if (composite) {
 		for(j=0; j<v_size; j++) {
 			for(i=0; i<h_size; i++) {
 				pos=j*h_size+i;		/* pos: 画像平面上の点(i,j)に対応する配列のインデックス */
-			
+
 				/* --------------------------------------------------------------------
 				 *							【 ここに追加すべき処理の内容 】
 				 * --------------------------------------------------------------------
@@ -413,7 +413,7 @@ float
 			} /* for(i) */
 		} /* for(j) */
 	} /* if (composite) */
-			
+
 
 	/*
 	 *  (8) 処理結果の出力
@@ -433,14 +433,14 @@ float
 			v_size,				/* in：画像サイズ（タテ） */
 			fp_bmp_actual);		/* out：オブジェクト領域画像の出力先 */
 	}
-	
+
 	/* オブジェクト領域候補１の出力 */
 	ret=image_output_bmp(
 		cand_mask[0],			/* in：オブジェクト領域候補１ */
 		h_size,					/* in：画像サイズ（ヨコ） */
 		v_size,					/* in：画像サイズ（タテ） */
 		fp_bmp_alpha_1);		/* out：オブジェクト領域候補１の出力先 */
-	
+
 	/* オブジェクト領域候補２の出力 */
 	ret=image_output_bmp(
 		cand_mask[1],			/* in：オブジェクト領域候補２ */
@@ -474,7 +474,7 @@ float
 	fclose(fp_bmp_actual);
 	if (composite) fclose(fp_bmp_base);
 	if (evaluation) fclose(fp_bmp_ideal);
-		
+
 	for(c=0; c<3; c++) {
 		for(t=0; t<3; t++) 	free((unsigned char *) input_bmp_image[t][c]);
 		free((unsigned char *) input_grey_image[c]);
@@ -486,7 +486,7 @@ float
 		free((unsigned char *) alpha_values[k]);
 	}
 	fprintf(stderr,"program terminated normally\n");
-		
+
 	return 0;
 }
 
@@ -497,7 +497,7 @@ float
  *	サブ関数
  *
  * ------------------------------- */
- 
+
 /* 引数に関するメッセージの表示 */
 void usage (char *s)
 {
@@ -512,7 +512,7 @@ void usage (char *s)
 	fprintf(stdout,"	-out\t\t(out: output bmp)\n");
 	fprintf(stdout,"	[-composite\t-base (in: base bmp)]\n");
 	fprintf(stdout,"	[-ideal\t\t(in:  ideal mask)]\n");
-	
+
   exit(1);
 }
 
@@ -529,7 +529,7 @@ void initialise(
 	FILE **fp_bmp_alpha_2,
 	FILE **fp_bmp_actual,
 	FILE **fp_bmp_ideal,
-	int *h_size, 
+	int *h_size,
 	int *v_size,
 	float *theta,
 	int *evaluation,
@@ -564,63 +564,63 @@ void initialise(
 		fn_bmp_ideal[BUFSZ],
 		fn_histogram[BUFSZ],
 		*string;
-		
-	
+
+
 	/* 各オプションの設定（デフォルト値） */
-    *evaluation=0;
-    *composite=0;
+	*evaluation=0;
+	*composite=0;
 
 	/* 引数の読み込み */
 	i=1;
 	while (i<argc) {
-    	if (argv[i][0]=='-') {
-        	string = argv[i];
+		if (argv[i][0]=='-') {
+			string = argv[i];
 
-        	if (strcmp( string, "-in1" ) == 0 ) {
-          		fp_in_1_check=1;
-          		sprintf(fn_bmp_in_1,"%s",argv[i+1]);
-          		i+=2;
-        	} else if (strcmp( string, "-in2" ) == 0 ) {
-          		fp_in_2_check=1;
-          		sprintf(fn_bmp_in_2,"%s",argv[i+1]);
-          		i+=2;
-        	} else if (strcmp( string, "-in3" ) == 0 ) {
-          		fp_in_3_check=1;
-          		sprintf(fn_bmp_in_3,"%s",argv[i+1]);
-          		i+=2;
-        	} else if (strcmp( string, "-base" ) == 0 ) {
-          		fp_base_check=1;
-          		*composite=1;
-          		sprintf(fn_bmp_base,"%s",argv[i+1]);
-          		i+=2;
-        	} else if (strcmp( string, "-histogram" ) == 0 ) {
-          		fp_hist_check=1;
-          		sprintf(fn_histogram,"%s",argv[i+1]);
-          		i+=2;
-        	} else if(strcmp( string, "-alpha1" ) == 0 ) {
-          		fp_alpha_1_check=1;
-          		sprintf(fn_bmp_alpha_1,"%s",argv[i+1]);
-          		i+=2;
-        	} else if(strcmp( string, "-alpha2" ) == 0 ) {
-          		fp_alpha_2_check=1;
-          		sprintf(fn_bmp_alpha_2,"%s",argv[i+1]);
-          		i+=2;
-        	} else if(strcmp( string, "-out" ) == 0 ) {
-          		fp_actual_check=1;
-          		sprintf(fn_bmp_actual,"%s",argv[i+1]);
-          		i+=2;
-        	} else if(strcmp( string, "-ideal" ) == 0 ) {
-          		fp_ideal_check=1;
-          		*evaluation=1;
-          		sprintf(fn_bmp_ideal,"%s",argv[i+1]);
-          		i+=2;
-        	} else if(strcmp( string, "-theta" ) == 0 ) {
-          		*theta = atof(argv[i+1]);
-          		i+=2;
-        	} else {
-          		fprintf(stderr,"unknown option %s \n",string);
-          		exit(0);
-        	}
+			if (strcmp( string, "-in1" ) == 0 ) {
+				  fp_in_1_check=1;
+				  sprintf(fn_bmp_in_1,"%s",argv[i+1]);
+				  i+=2;
+			} else if (strcmp( string, "-in2" ) == 0 ) {
+				  fp_in_2_check=1;
+				  sprintf(fn_bmp_in_2,"%s",argv[i+1]);
+				  i+=2;
+			} else if (strcmp( string, "-in3" ) == 0 ) {
+				  fp_in_3_check=1;
+				  sprintf(fn_bmp_in_3,"%s",argv[i+1]);
+				  i+=2;
+			} else if (strcmp( string, "-base" ) == 0 ) {
+				  fp_base_check=1;
+				  *composite=1;
+				  sprintf(fn_bmp_base,"%s",argv[i+1]);
+				  i+=2;
+			} else if (strcmp( string, "-histogram" ) == 0 ) {
+				  fp_hist_check=1;
+				  sprintf(fn_histogram,"%s",argv[i+1]);
+				  i+=2;
+			} else if(strcmp( string, "-alpha1" ) == 0 ) {
+				  fp_alpha_1_check=1;
+				  sprintf(fn_bmp_alpha_1,"%s",argv[i+1]);
+				  i+=2;
+			} else if(strcmp( string, "-alpha2" ) == 0 ) {
+				  fp_alpha_2_check=1;
+				  sprintf(fn_bmp_alpha_2,"%s",argv[i+1]);
+				  i+=2;
+			} else if(strcmp( string, "-out" ) == 0 ) {
+				  fp_actual_check=1;
+				  sprintf(fn_bmp_actual,"%s",argv[i+1]);
+				  i+=2;
+			} else if(strcmp( string, "-ideal" ) == 0 ) {
+				  fp_ideal_check=1;
+				  *evaluation=1;
+				  sprintf(fn_bmp_ideal,"%s",argv[i+1]);
+				  i+=2;
+			} else if(strcmp( string, "-theta" ) == 0 ) {
+				  *theta = atof(argv[i+1]);
+				  i+=2;
+			} else {
+				  fprintf(stderr,"unknown option %s \n",string);
+				  exit(0);
+			}
 		} else {
 			fprintf(stderr,"unknown option %s \n",argv[i]);
 			exit(0);
@@ -637,9 +637,9 @@ void initialise(
 			fprintf(stderr," Can't open input file-1:%s\n", fn_bmp_in_1);
 			exit(1);
 		}
-		fprintf(stderr," input bmp file(1): %s\n",fn_bmp_in_1);  
+		fprintf(stderr," input bmp file(1): %s\n",fn_bmp_in_1);
 	}
-		
+
 	if (fp_in_2_check==0) {
 			fprintf(stderr," set input file name(t=2) with -in2 \n");
 			usage(argv[0]);
@@ -648,9 +648,9 @@ void initialise(
 			fprintf(stderr," Can't open input file-2:%s\n", fn_bmp_in_2);
 			exit(1);
 		}
-		fprintf(stderr," input bmp file(2): %s\n",fn_bmp_in_2);  
+		fprintf(stderr," input bmp file(2): %s\n",fn_bmp_in_2);
 	}
-		
+
 	if (fp_in_3_check==0) {
 		fprintf(stderr," set input file name(t=3) with -in3 \n");
 		usage(argv[0]);
@@ -659,9 +659,9 @@ void initialise(
 			fprintf(stderr," Can't open input file-3:%s\n", fn_bmp_in_3);
 			exit(1);
 		}
-		fprintf(stderr," input bmp file(3): %s\n",fn_bmp_in_3);  
+		fprintf(stderr," input bmp file(3): %s\n",fn_bmp_in_3);
 	}
-			
+
 	if (*composite) {
 		if (fp_base_check==0) {
 			fprintf(stderr," set base image file with -base \n");
@@ -671,10 +671,10 @@ void initialise(
 				fprintf(stderr," Can't open base image file:%s\n", fn_bmp_base);
 				exit(1);
 			}
-			fprintf(stderr," base bmp file: %s\n",fn_bmp_base);  
+			fprintf(stderr," base bmp file: %s\n",fn_bmp_base);
 		}
 	}
-	
+
 	if (fp_hist_check==0) {
 			fprintf(stderr," set output file name (histogram) with -histogram \n");
 			usage(argv[0]);
@@ -683,9 +683,9 @@ void initialise(
 			fprintf(stderr," Can't open file (histogram):%s\n", fn_histogram);
 			exit(1);
 		}
-		fprintf(stderr," histogram: %s\n",fn_histogram);  
+		fprintf(stderr," histogram: %s\n",fn_histogram);
 	}
-	
+
 	if (fp_alpha_1_check==0) {
 			fprintf(stderr," set output file name (alpha values) with -alpha1\n");
 			usage(argv[0]);
@@ -734,8 +734,8 @@ void initialise(
 		}
 		fprintf(stderr," ground truth (mask image): %s\n",fn_bmp_ideal);
 	}
-	
-	
+
+
 	/* 入力画像１の取得 */
 	ret=get_bmp_image_size(h_size,v_size,*fp_bmp_in_1);
 
@@ -818,7 +818,7 @@ void initialise(
 	fprintf(stderr," width x length : %d x %d\n",*h_size,*v_size);
 
 	return;
-}	
+}
 
 
 /* 量子化（ヒストグラムのビンの決定） */
@@ -883,7 +883,7 @@ float eval_err_rate (
 				num_of_error_pix++;				/* 誤った画素数のカウント*/
 		} /* for (i) */
 	} /* for (j) */
-	
+
 	/* 誤差の算出*/
 	error_rate = 100.0 * (float) num_of_error_pix / (float) (h_size * v_size);
 
