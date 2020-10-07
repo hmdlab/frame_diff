@@ -205,8 +205,7 @@ int
 					bin=quantize(output_image[c][j*h_size+i]);
 				} else if (negative_img) {
 				/* 輝度反転操作（'-negative'オプション指定時） */
-					output_image[c][j*h_size+i]=
-						(unsigned char)((int)255-(int)input_image[c][j*h_size+i]);
+					output_image[c][j*h_size+i]=255-input_image[c][j*h_size+i];
 					bin=quantize(output_image[c][j*h_size+i]);
 				} else {
 				/* 画像操作なし（デフォルト） */
