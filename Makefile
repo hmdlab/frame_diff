@@ -1,16 +1,9 @@
-all: frame_diff clean
+.PHONY: all clean
 
-frame_diff: frame_diff.o image_io.o median_filter.o
-	gcc frame_diff.o image_io.o median_filter.o -o bin/frame_diff
+all: frame_diff
 
-frame_diff.o:
-	gcc -c src/frame_diff.c
-
-image_io.o:
-	gcc -c src/image_io.c src/image_io.h
-	
-median_filter.o:
-	gcc -c src/median_filter.c src/median_filter.h
+frame_diff: src/frame_diff.c src/image_io.c src/median_filter.c
+	gcc $^ -o bin/$@
 
 clean:
-	-rm -f *.o
+	-rm -f bin/*
