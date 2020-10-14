@@ -9,14 +9,14 @@ cd "${cwd}/.."
 
 # バイナリを実行する
 bin/image_test -in images/flower.bmp \
-               -histogram out/flower_hist.csv \
+               -histogram out/flower_hist.tsv \
 
 bin/image_test -in images/flower.bmp \
                -out out/flower_reflect.bmp \
-               -histogram out/flower_refl_hist.csv \
+               -histogram out/flower_refl_hist.tsv \
                -reflect
                
 bin/image_test -in images/flower.bmp \
                -out out/flower_invert.bmp \
-               -histogram out/flower_inv_hist.csv \
+               -histogram out/flower_inv_hist.tsv \
                -negative

@@ -7,16 +7,16 @@ expr "${0}" : "/.*" > /dev/null || cwd=`(cd "${cwd}" && pwd)`
 
 cd "${cwd}/.."
 
-IN1="images/001.bmp"
-IN2="images/002.bmp"
-IN3="images/003.bmp"
-BASE="images/cambridge.bmp"
+IN1="images/1.bmp"
+IN2="images/2.bmp"
+IN3="images/3.bmp"
+BASE="images/base.bmp"
 THETA=10
 
 ALPHA1="out/alpha1vs2.bmp"
 ALPHA2="out/alpha2vs3.bmp"
 
-OUT_HIST="out/hist.csv"
+OUT_HIST="out/hist.tsv"
 OUT_COMPOSITE="out/composite.bmp"
 OUT_MASK="out/mask.bmp"
 

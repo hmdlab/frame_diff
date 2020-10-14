@@ -11,7 +11,7 @@ cd "${cwd}/.."
 bin/frame_diff -in1 images/001.bmp \
                -in2 images/002.bmp \
                -in3 images/003.bmp \
-               -histogram out/hist.csv \
+               -histogram out/hist.tsv \
                -alpha1 out/alpha1vs2.bmp \
                -alpha2 out/alpha2vs3.bmp \
                -theta 10 \
