@@ -237,7 +237,7 @@ int
 		fprintf(
 			fphist,						/* out:ヒストグラムデータの出力先 */
 			"%d\t%d\t%d\t%d\n",			/* in:データファイルの書式 */
-			bin*step_size+step_size/2,  /* in:代表値（中央値） */
+			bin*step_size,  /* in:代表値（中央値） */
 			histograms[0][bin],			/* in:R成分の値（0～255）の出現頻度 */
 			histograms[1][bin],			/* in:G成分の値（0～255）の出現頻度 */
 			histograms[2][bin]			/* in:B成分の値（0～255）の出現頻度 */
