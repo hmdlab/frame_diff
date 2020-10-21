@@ -455,7 +455,7 @@ float
 		fprintf(
 			fp_histogram,				/* out:ヒストグラムデータの出力先 */
 			"%d\t%d\t%d\n",				/* in:データファイルの書式（代表値   頻度１　	頻度２） */
-			bin*step_size+step_size/2,  /* in:代表値（中央値） */
+			bin*step_size,              /* in:開始値 */
 			histograms[0][bin],			/* in:輝度フレーム間差分１の頻度 */
 			histograms[1][bin]			/* in:輝度フレーム間差分２の頻度 */
 		);
