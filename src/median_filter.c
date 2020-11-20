@@ -8,7 +8,8 @@ void MedianSmoothing (
     int num_layers
 ) 
 {
-    unsigned char	p[9];
+    unsigned char p[9];
+    unsigned char out[num_layers][h_size*v_size];
     int	t,i,j,pos;
     
     for(t=0;t<num_layers;t++) {
@@ -24,10 +25,20 @@ void MedianSmoothing (
                 p[6]=img_arr[t][pos+h_size-1];
                 p[7]=img_arr[t][pos+h_size];
                 p[8]=img_arr[t][pos+h_size+1];
-                img_arr[t][pos]=uc_median(p,9);
+                out[t][pos]=uc_median(p,9);
             } /* for (i) */
         } /* for (j) */
     } /* for (t) */
+
+    for(t=0;t<num_layers;t++) {
+        for(j=1;j<(v_size-1);j++) {
+            for(i=1;i<(h_size-1);i++) {
+                pos=j*h_size+i;
+                img_arr[t][pos] = out[t][pos];
+            }
+        }
+    }
+
 }
 /* ---------------------------- */
 
